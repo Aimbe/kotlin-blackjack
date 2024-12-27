@@ -62,11 +62,26 @@ object OutputView {
         val dealerLoses = dealerResult[GameResult.LOSE] ?: 0
 
         messageBuilder.clear()
-            .append("## 최종 승패\n")
+            .append("## 최종 금액\n")
             .append("딜러: ${dealerWins}승 ${dealerLoses}패\n")
 
         playerResults.forEach { (player, result) ->
             messageBuilder.append("$player: ${result.toString().lowercase()}\n")
+        }
+
+        print(messageBuilder.toString())
+    }
+
+    fun printFinalProfits(
+        dealerProfit: Double,
+        playerProfits: Map<Player, Double>,
+    ) {
+        messageBuilder.clear()
+            .append("\n## 최종 수익\n")
+            .append("딜러: ${dealerProfit.toInt()}원\n")
+
+        playerProfits.forEach { (player, profit) ->
+            messageBuilder.append("$player: ${profit.toInt()}원\n")
         }
 
         print(messageBuilder.toString())

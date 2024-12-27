@@ -9,8 +9,21 @@ object InputView {
 
         val input = readlnOrNull()?.trim() ?: throw IllegalArgumentException("입력이 없습니다.")
         require(input.isNotEmpty()) { "이름은 최소 1개 이상 입력해야 합니다." }
-        return input.split(",").map { it.trim() }.also {
-            require(it.all { name -> name.isNotEmpty() }) { "빈 이름은 입력할 수 없습니다." }
+        return input.split(",").map { it.trim() }
+    }
+
+    fun readBetAmounts(names: List<String>): List<Int> {
+        messageBuilder.clear()
+            .append("각 플레이어가 배팅할 금액을 입력하세요.")
+        print(messageBuilder.toString())
+
+        return names.map { name ->
+            messageBuilder.clear()
+                .append(name)
+                .append("의 배팅 금액은?")
+            print(messageBuilder.toString())
+
+            readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException("숫자를 입력해주세요.")
         }
     }
 

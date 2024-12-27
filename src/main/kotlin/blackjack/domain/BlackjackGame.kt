@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.DealerState
 import blackjack.domain.player.Player
 import blackjack.domain.state.GameResult
 
@@ -17,13 +18,21 @@ class BlackjackGame {
         dealInitialCards()
     }
 
-    fun calculateResult(): Map<Player, GameResult> {
-        if (dealer.isBust()) {
-            return players.associateWith { GameResult.WIN }
-        }
+    fun calculateProfits(players: List<Player>, dealer: Dealer): Map<Player, Double> {
+        val dealerState = dealer.getState()
 
         return players.associateWith { player ->
-            determineResult(player, dealer)
+            determineResult(player.score(), dealerState)
+            player.calculateProfit(dealerState)
+        }
+    }
+
+    fun calculateDealerProfit(players: List<Player>, dealer: Dealer): Double {
+        val dealerState = dealer.getState()
+
+        return -players.sumOf { player ->
+            determineResult(player.score(), dealerState)
+            player.calculateProfit(dealerState)
         }
     }
 
@@ -36,19 +45,12 @@ class BlackjackGame {
         }
     }
 
-    private fun determineResult(
-        player: Player,
-        dealer: Dealer,
-    ): GameResult {
-        val playerScore = player.score()
-        val dealerScore = dealer.score()
-
-        if (player.isBust()) return GameResult.LOSE
-        if (dealer.isBust()) return GameResult.WIN
-
+    private fun determineResult(playerScore: Int, dealerState: DealerState): GameResult {
         return when {
-            playerScore > dealerScore -> GameResult.WIN
-            playerScore < dealerScore -> GameResult.LOSE
+            dealerState.isBust -> GameResult.WIN
+            dealerState.isBlackjack -> GameResult.LOSE
+            playerScore > dealerState.score -> GameResult.WIN
+            playerScore < dealerState.score -> GameResult.LOSE
             else -> GameResult.DRAW
         }
     }
