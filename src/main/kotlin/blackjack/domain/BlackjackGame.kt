@@ -2,9 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.DealerState
 import blackjack.domain.player.Player
-import blackjack.domain.state.GameResult
 
 class BlackjackGame {
     private val deck = Deck()
@@ -25,7 +23,6 @@ class BlackjackGame {
         val dealerState = dealer.getState()
 
         return players.associateWith { player ->
-            determineResult(player.score(), dealerState)
             player.calculateProfit(dealerState)
         }
     }
@@ -37,7 +34,6 @@ class BlackjackGame {
         val dealerState = dealer.getState()
 
         return -players.sumOf { player ->
-            determineResult(player.score(), dealerState)
             player.calculateProfit(dealerState)
         }
     }
@@ -48,19 +44,6 @@ class BlackjackGame {
             players.forEach { player ->
                 player.drawCard(deck.draw())
             }
-        }
-    }
-
-    private fun determineResult(
-        playerScore: Int,
-        dealerState: DealerState,
-    ): GameResult {
-        return when {
-            dealerState.isBust -> GameResult.WIN
-            dealerState.isBlackjack -> GameResult.LOSE
-            playerScore > dealerState.score -> GameResult.WIN
-            playerScore < dealerState.score -> GameResult.LOSE
-            else -> GameResult.DRAW
         }
     }
 

@@ -9,7 +9,6 @@ class Dealer : Participant() {
         return DealerState(
             isBust = isBust(),
             isBlackjack = score() == 21,
-            score = score(),
         )
     }
 

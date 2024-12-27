@@ -23,7 +23,7 @@ class StayTest {
     @Test
     fun profit() {
         val state = Stay(Hands(CLUBS_TWO, CLUBS_TEN, CLUBS_KING))
-        val acutal = state.profit(1000, DealerState(isBust = false, isBlackjack = false, score = 17))
+        val acutal = state.profit(1000, DealerState(isBust = false, isBlackjack = false))
 
         acutal shouldBe 1_000
     }

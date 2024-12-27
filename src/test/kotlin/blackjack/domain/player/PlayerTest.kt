@@ -43,7 +43,7 @@ class PlayerTest : StringSpec({
         player.drawCard(PlayingCard.of(Suit.HEARTS, Denomination.ACE))
         player.drawCard(PlayingCard.of(Suit.SPADES, Denomination.KING))
 
-        player.calculateProfit(DealerState(isBust = false, isBlackjack = false, 17)) shouldBe 1500.0
+        player.calculateProfit(DealerState(isBust = false, isBlackjack = false)) shouldBe 1500.0
     }
 
     "딜러가 블랙잭일때 플레이어가 블랙잭을 받으면 게임이 종료되고 1.0배의 수익을 얻는다" {
@@ -51,7 +51,7 @@ class PlayerTest : StringSpec({
         player.drawCard(PlayingCard.of(Suit.HEARTS, Denomination.ACE))
         player.drawCard(PlayingCard.of(Suit.SPADES, Denomination.KING))
 
-        player.calculateProfit(DealerState(isBust = false, isBlackjack = true, 21)) shouldBe 1000.0
+        player.calculateProfit(DealerState(isBust = false, isBlackjack = true)) shouldBe 1000.0
     }
 
     "플레이어가 bust되면 게임이 종료되고 수익이 배팅금액만큼 -가 된다" {
@@ -61,7 +61,7 @@ class PlayerTest : StringSpec({
         player.drawCard(PlayingCard.of(Suit.DIAMONDS, Denomination.JACK))
 
         player.isRunning() shouldBe false
-        player.calculateProfit(DealerState(isBust = false, isBlackjack = false, 18)) shouldBe -1_000.0
+        player.calculateProfit(DealerState(isBust = false, isBlackjack = false)) shouldBe -1_000.0
     }
 
     "플레이어가 stay하면 게임이 종료된다" {
