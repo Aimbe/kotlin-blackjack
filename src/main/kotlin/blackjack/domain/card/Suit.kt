@@ -4,7 +4,8 @@ enum class Suit(val symbol: String) {
     HEARTS("♥"),
     DIAMONDS("♦"),
     CLUBS("♣"),
-    SPADES("♠");
+    SPADES("♠"),
+    ;
 
     fun createCards(): List<PlayingCard> {
         return Denomination.entries.map { denomination ->
@@ -12,4 +13,3 @@ enum class Suit(val symbol: String) {
         }
     }
 }
-

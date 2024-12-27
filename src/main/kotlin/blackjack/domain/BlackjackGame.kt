@@ -18,7 +18,10 @@ class BlackjackGame {
         dealInitialCards()
     }
 
-    fun calculateProfits(players: List<Player>, dealer: Dealer): Map<Player, Double> {
+    fun calculateProfits(
+        players: List<Player>,
+        dealer: Dealer,
+    ): Map<Player, Double> {
         val dealerState = dealer.getState()
 
         return players.associateWith { player ->
@@ -27,7 +30,10 @@ class BlackjackGame {
         }
     }
 
-    fun calculateDealerProfit(players: List<Player>, dealer: Dealer): Double {
+    fun calculateDealerProfit(
+        players: List<Player>,
+        dealer: Dealer,
+    ): Double {
         val dealerState = dealer.getState()
 
         return -players.sumOf { player ->
@@ -45,7 +51,10 @@ class BlackjackGame {
         }
     }
 
-    private fun determineResult(playerScore: Int, dealerState: DealerState): GameResult {
+    private fun determineResult(
+        playerScore: Int,
+        dealerState: DealerState,
+    ): GameResult {
         return when {
             dealerState.isBust -> GameResult.WIN
             dealerState.isBlackjack -> GameResult.LOSE

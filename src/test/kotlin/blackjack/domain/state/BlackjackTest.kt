@@ -21,7 +21,7 @@ class BlackjackTest {
     @Test
     fun profit() {
         val state = Blackjack(Hands(CLUBS_ACE, CLUBS_TEN))
-        val actual = state.profit(1000,DealerState(isBust = false, isBlackjack = false, score = 17))
+        val actual = state.profit(1000, DealerState(isBust = false, isBlackjack = false, score = 17))
         actual shouldBe 1_500
     }
 }
