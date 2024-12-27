@@ -29,21 +29,23 @@ object InputView {
 
     fun readMoreCard(name: String): Boolean {
         while (true) {
-            messageBuilder.clear()
-                .append(name)
-                .append("는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-            print(messageBuilder.toString())
+            println(buildPromptMessage(name))
 
-            when (readlnOrNull()?.trim()?.lowercase()) {
-                "y" -> return true
-                "n" -> return false
-                else -> {
-                    messageBuilder.clear()
-                        .append("y 또는 n만 입력해주세요.")
-                    print(messageBuilder.toString())
-                }
+            val userInput = readlnOrNull()?.trim()?.lowercase()
+            if (isValidInput(userInput)) {
+                return userInput == "y"
+            } else {
+                println("y 또는 n만 입력해주세요.")
             }
         }
+    }
+
+    private fun buildPromptMessage(name: String): String {
+        return "$name 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+    }
+
+    private fun isValidInput(input: String?): Boolean {
+        return input == "y" || input == "n"
     }
 
     private fun print(message: String) {
